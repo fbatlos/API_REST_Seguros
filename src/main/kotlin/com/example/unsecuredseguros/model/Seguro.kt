@@ -12,33 +12,33 @@ data class Seguro(
     val idSeguro: Int,
 
     @Column(nullable = false , length = 10)
-    val nif: String,
+    var nif: String,
 
     @Column(nullable = false,length = 100)
-    val nombre: String,
+    var nombre: String,
 
     @Column(nullable = false,length = 100)
-    val ape1: String,
+    var ape1: String,
 
     @Column(length = 100)
-    val ape2: String?,
+    var ape2: String?,
 
     @Column(nullable = false)
-    val edad: Int,
+    var edad: Int,
 
     @Column(nullable = false)
     var numHijos: Int,
 
     @Column(nullable = false)
     @Timestamp
-    val fechaCreacion: Date,
+    var fechaCreacion: Date,
 
     @Column(nullable = false,length = 10 )
-    val sexo: String,
+    var sexo: String,
 
     @Column(nullable = false)
-    val casado: Boolean,
+    var casado: Boolean,
 
     @Column(nullable = false)
-    val embarazada: Boolean
+    var embarazada: Boolean
 )

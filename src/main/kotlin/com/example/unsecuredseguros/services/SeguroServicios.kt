@@ -25,11 +25,38 @@ class SeguroServicios {
     }
 
     fun insert(seguro: Seguro): Boolean {
-        if (Utils.checkSeguro(seguro)){
+        if (Utils.checkSeguro(seguro)) {
             segurosRepository.save(seguro)
             return true
         }else{
             return false
         }
+    }
+
+    fun update(id: Int,nuevoSeguro: Seguro): Seguro? {
+
+        val idL = id.toLong()
+        val seguro = segurosRepository.findByIdOrNull(idL)
+
+        if (Utils.checkSeguro(nuevoSeguro)){
+            return null
+        }
+
+        if (seguro != null) {
+            seguro.nif = nuevoSeguro.nif
+            seguro.nombre = nuevoSeguro.nombre
+            seguro.ape1 = nuevoSeguro.ape1
+            seguro.ape2 = nuevoSeguro.ape2
+            seguro.edad = nuevoSeguro.edad
+            seguro.numHijos = nuevoSeguro.numHijos
+            seguro.fechaCreacion = nuevoSeguro.fechaCreacion
+            seguro.sexo = nuevoSeguro.sexo
+            seguro.casado = nuevoSeguro.casado
+            seguro.embarazada = nuevoSeguro.embarazada
+
+            return segurosRepository.save(seguro)
+        }
+
+        return null
     }
 }

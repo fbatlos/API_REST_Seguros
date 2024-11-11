@@ -31,4 +31,13 @@ class SeguroController {
     ):Boolean?{
       return  seguroService.insert(seguro)
     }
+
+    @PutMapping("/{id}")
+    fun update(
+        @PathVariable("id") id:Int,
+
+        @RequestBody seguro: Seguro
+    ):Seguro?{
+        return seguroService.update(id, seguro)
+    }
 }

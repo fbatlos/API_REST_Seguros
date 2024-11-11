@@ -41,8 +41,9 @@ object Utils {
     }
 
     private fun embarazada(embarazada:Boolean,sexo:String):Boolean? {
-        sexo.uppercase()
-        if (embarazada && sexo == "MUJER"){return true}
+        val sexoUpper= sexo.uppercase()
+        if (sexoUpper == "HOMBRE"){return true}
+        if (embarazada && sexoUpper == "MUJER"){return true}
         return null
     }
 
