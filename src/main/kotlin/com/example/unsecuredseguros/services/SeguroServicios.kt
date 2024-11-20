@@ -1,10 +1,13 @@
 ﻿package com.example.unsecuredseguros.services
 
+import com.example.unsecuredseguros.exception.NotFoundException
 import com.example.unsecuredseguros.model.Seguro
 import com.example.unsecuredseguros.repository.SegurosRepository
 import com.example.unsecuredseguros.utils.Utils
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -19,17 +22,18 @@ class SeguroServicios {
     }
 
 
-    fun getById(id: Int): Seguro? {
-        val idL = id.toLong()?:return null
+    fun getById(id: String): Seguro? {
+        val idL = id.toLong()
         return segurosRepository.findByIdOrNull(idL)
     }
 
-    fun insert(seguro: Seguro): Boolean {
-        if (Utils.checkSeguro(seguro)) {
+    fun insert(seguro: Seguro): Seguro? {
+
+        if (Utils.checkSeguro(seguro) && segurosRepository.findByNif(seguro.nif) == null) {
             segurosRepository.save(seguro)
-            return true
+            return seguro
         }else{
-            return false
+            return null
         }
     }
 
@@ -38,7 +42,7 @@ class SeguroServicios {
         val idL = id.toLong()
         val seguro = segurosRepository.findByIdOrNull(idL)
 
-        if (Utils.checkSeguro(nuevoSeguro)){
+        if (!Utils.checkSeguro(nuevoSeguro)){
             return null
         }
 
@@ -58,5 +62,13 @@ class SeguroServicios {
         }
 
         return null
+    }
+
+    fun delete(id: Int): Boolean? {
+        val idL = id.toLong()
+        val seguro = segurosRepository.findByIdOrNull(idL)?:return null
+        segurosRepository.deleteById(idL)
+
+        return true
     }
 }

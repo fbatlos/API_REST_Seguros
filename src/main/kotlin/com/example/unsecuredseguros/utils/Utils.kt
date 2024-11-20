@@ -1,25 +1,31 @@
 ﻿package com.example.unsecuredseguros.utils
 
+import com.example.unsecuredseguros.exception.ValidationException
 import com.example.unsecuredseguros.model.Seguro
 
 object Utils {
 
     fun checkSeguro(seguro: Seguro): Boolean {
-        checkNIF(seguro.nif)?:return false
-        vacioString(seguro.nombre) ?:return false
-        vacioString(seguro.ape1)?:return false
-        checkEdad(seguro.edad)?:return false
-        seguro.sexo ?: return false
-        numHijos(seguro.numHijos)?:return false
+        checkNIF(seguro.nif)?:throw ValidationException("El campo NIF no tiene un formato válido.")
+
+        vacioString(seguro.nombre) ?:throw ValidationException("El campo nombre no puede estar vacío.")
+
+        vacioString(seguro.ape1)?:throw ValidationException("El apelledo no puede estar vacio.")
+
+        checkEdad(seguro.edad)?:throw ValidationException("No es posible ser menor de edad para hacer un seguro.")
+
+        seguro.sexo
+        numHijos(seguro.numHijos)?:throw ValidationException("Un seguro no puede registrar hijos si no está casado.")
+
         if (!seguro.casado){seguro.numHijos = 0}
-        embarazada(seguro.embarazada,seguro.sexo)?:return false
+        embarazada(seguro.embarazada,seguro.sexo)?:throw ValidationException("El campo embarazada no puede ser true si el asegurado es hombre.")
         return true
     }
 
     private fun checkNIF(nif:String): Boolean? {
         if (nif.length != 9) return null
         val letras = "TRWAGMYFPDXBNJZSQVHLCKE"
-        val numero = nif.substring(0, 8).toIntOrNull() ?: return null
+        val numero = nif.substring(0, 8).toInt()
         val letra = nif.last()
         val letraCalculada = letras[numero % 23]
         if(letra == letraCalculada){return true}else{return null}
@@ -42,9 +48,8 @@ object Utils {
 
     private fun embarazada(embarazada:Boolean,sexo:String):Boolean? {
         val sexoUpper= sexo.uppercase()
-        if (sexoUpper == "HOMBRE"){return true}
-        if (embarazada && sexoUpper == "MUJER"){return true}
-        return null
+        if (sexoUpper == "HOMBRE" && embarazada){return null}
+        return true
     }
 
 }
