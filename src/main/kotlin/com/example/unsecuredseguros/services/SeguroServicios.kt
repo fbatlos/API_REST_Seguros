@@ -66,7 +66,7 @@ class SeguroServicios {
 
     fun delete(id: Int): Boolean? {
         val idL = id.toLong()
-        val seguro = segurosRepository.findByIdOrNull(idL)?:return null
+        segurosRepository.findByIdOrNull(idL)?:return null
         segurosRepository.deleteById(idL)
 
         return true

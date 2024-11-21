@@ -40,7 +40,7 @@ class AsistenciaController {
     }
 
 
-
+/*
     @PostMapping("/seguros/{idSeguro}/asistencias")
     fun insert(
         @RequestBody seguro: Seguro
@@ -49,7 +49,7 @@ class AsistenciaController {
 
         return ResponseEntity.ok(seguro)
     }
-
+*/
 
 
     @PutMapping("/{idAsistencia}")
@@ -57,7 +57,7 @@ class AsistenciaController {
         @PathVariable("idAsistencia") id:Int,
 
         @RequestBody asistenciaMedica: AsistenciaMedica
-    ): ResponseEntity<Seguro> {
+    ): ResponseEntity<AsistenciaMedica> {
         val asistencia = asistenciasService.update(id, asistenciaMedica)?: throw ValidationException("La asistencia no existe")
 
         return ResponseEntity.ok(asistencia)

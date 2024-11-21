@@ -1,6 +1,7 @@
 ﻿package com.example.unsecuredseguros.utils
 
 import com.example.unsecuredseguros.exception.ValidationException
+import com.example.unsecuredseguros.model.AsistenciaMedica
 import com.example.unsecuredseguros.model.Seguro
 
 object Utils {
@@ -52,4 +53,19 @@ object Utils {
         return true
     }
 
+    fun checkAsistencia(asistenciaMedica: AsistenciaMedica): Boolean {
+
+        vacioString(asistenciaMedica.breve_descripcion)?:throw ValidationException("El campo breveDescripcion no puede estar vacío.")
+        vacioString(asistenciaMedica.lugar)?: throw ValidationException("El campo lugar no puede estar vacío.")
+        vacioString(asistenciaMedica.explicacion)?:throw ValidationException("El campo explicacion no puede estar vacío.")
+
+        checkImporte(asistenciaMedica.importe)?:throw ValidationException("El campo importe debe ser mayor que 0.")
+        return true
+    }
+
+    private fun checkImporte(importe: Double): Boolean? {
+        if (importe.isNaN()) return null
+        if (importe <= 0) return null
+        return true
+    }
 }

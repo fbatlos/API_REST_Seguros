@@ -14,25 +14,25 @@ data class AsistenciaMedica(
     val id_asistencia_medica: Int,
 
     @Column(nullable = false,length = 255)
-    val breve_descripcion :String,
+    var breve_descripcion :String,
 
     @Column(nullable = false,length = 255)
-    val lugar :String,
+    var lugar :String,
 
     @Column(nullable = false)
-    val explicacion :String,
+    var explicacion :String,
 
     @Column(nullable = false,length = 100)
-    val tipo_asistencia :String,
+    var tipo_asistencia :String,
 
     @Column(nullable = false)
     @Timestamp
-    val fecha: LocalDate,
+    var fecha: LocalDate,
     @Column(nullable = false)
     @Timestamp
-    val hora: LocalTime,
+    var hora: LocalTime,
     @Column(nullable = false)
-    val importe: Double,
+    var importe: Double,
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_seguro", nullable = false)
