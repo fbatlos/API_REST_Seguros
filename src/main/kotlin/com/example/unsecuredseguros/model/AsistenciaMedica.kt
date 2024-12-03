@@ -1,5 +1,6 @@
 ﻿package com.example.unsecuredseguros.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 import jdk.jfr.Timestamp
 import java.time.LocalDate
@@ -34,7 +35,8 @@ data class AsistenciaMedica(
     @Column(nullable = false)
     var importe: Double,
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_seguro", nullable = false)
-    val id_seguro: Seguro,
+    @ManyToOne(optional = false,cascade = [CascadeType.ALL],fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_seguro", nullable = false )
+    @JsonBackReference
+    var id_seguro: Seguro?,
 )

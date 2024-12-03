@@ -34,22 +34,24 @@ class AsistenciaController {
             //Lanzamos la exception
             throw ValidationException("id no puede estar vacio")
         }
-        val asistencia = asistenciasService.getById(id)?: throw NotFoundException("Seguro not found")
+        val asistencia = asistenciasService.getById(id)?: throw NotFoundException("Asistencia not found")
 
         return ResponseEntity.ok(asistencia)
     }
 
 
-/*
+
     @PostMapping("/seguros/{idSeguro}/asistencias")
     fun insert(
-        @RequestBody seguro: Seguro
-    ): ResponseEntity<Seguro> {
-        val seguro = seguroService.insert(seguro)?: throw ValidationException("El seguro ya existente")
+        @PathVariable("idSeguro") id:Long,
+
+        @RequestBody asistenciaMedica: AsistenciaMedica
+    ): ResponseEntity<AsistenciaMedica> {
+        val seguro = asistenciasService.insert(asistenciaMedica,id)?: throw ValidationException("El seguro no existente")
 
         return ResponseEntity.ok(seguro)
     }
-*/
+
 
 
     @PutMapping("/{idAsistencia}")

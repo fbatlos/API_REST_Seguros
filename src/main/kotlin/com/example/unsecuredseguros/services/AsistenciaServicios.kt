@@ -16,6 +16,9 @@ class AsistenciaServicios {
     @Autowired
     private lateinit var asistenciaRepository: AsistenciasRepository
 
+    @Autowired
+    private lateinit var seguroRepository: SegurosRepository
+
 
     fun getAll(): List<AsistenciaMedica> {
         return asistenciaRepository.findAll()
@@ -26,6 +29,17 @@ class AsistenciaServicios {
         val idL = id.toLong()
         return asistenciaRepository.findByIdOrNull(idL)
     }
+
+    fun insert(asistenciaMedica: AsistenciaMedica , idSeguro:Long):AsistenciaMedica?{
+
+        val seguro = seguroRepository.findByIdOrNull(idSeguro)?: return null
+
+        asistenciaMedica.id_seguro = seguro
+        asistenciaRepository.save(asistenciaMedica)
+        return asistenciaMedica
+    }
+
+
 
     fun update(id: Int,nuevaAsistencia: AsistenciaMedica): AsistenciaMedica? {
 

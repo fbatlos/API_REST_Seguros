@@ -42,6 +42,6 @@ data class Seguro(
     @Column(nullable = false)
     var embarazada: Boolean,
 
-    @OneToMany(mappedBy = "id_seguro", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "id_seguro", cascade = [CascadeType.ALL], orphanRemoval = false)
     val asistenciasMedicas:List<AsistenciaMedica>?=null
 )
