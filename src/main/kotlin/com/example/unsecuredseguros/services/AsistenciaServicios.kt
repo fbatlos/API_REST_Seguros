@@ -35,6 +35,7 @@ class AsistenciaServicios {
         val seguro = seguroRepository.findByIdOrNull(idSeguro)?: return null
 
         asistenciaMedica.id_seguro = seguro
+        Utils.checkAsistencia(asistenciaMedica)
         asistenciaRepository.save(asistenciaMedica)
         return asistenciaMedica
     }
